@@ -1,34 +1,27 @@
 <template>
   <div class="app" :class="typeof data.main != 'undefined' && data.main.temp > 16 ? 'app-hot' : ''">
     <main>
-      <div class="w-header">Wheatery</div>
+      <Header title = "Weathery"/>
       <SearchBox 
         @return-query="getQuery" 
         @keypress="fetchInfo"
       />
-      <!-- Todo: Separate in component -->
-      <div class="w-search-result" v-if="typeof data.main != 'undefined'">
-      <!-- Todo: Separate in component -->
-        <div class="w-location">
-          <div class="w-cityname">{{ data.name }}</div>
-          <div class="w-datetime">{{ date }}</div>
-        </div>
-        <!-- Todo: Separate in component -->
-        <div class="w-weather">
-          <div class="w-degree">{{ Math.round(data.main.temp) }}°</div>
-          <div class="w-status">{{ data.weather[0].main }}</div>
-        </div>
-      </div>
+      <ResultBox v-if="typeof data.main != 'undefined'"
+      :cityName = "data.name"
+      :givenDate = "date"
+      :givenDegree = "Math.round(data.main.temp)"
+      :givenStatus = "data.weather[0].main"
+      />
     </main>
   </div>
 </template>
 
 <script>
-  import {
-    ref
-  } from 'vue';
+  import {ref} from 'vue';
 
-  import SearchBox from './components/SearchBox.vue'
+  import Header from './components/Header/Header.vue';
+  import SearchBox from './components/SearchBox/SearchBox.vue';
+  import ResultBox from './components/ResultBox/ResultBox.vue';
 
   export default {
 
@@ -55,7 +48,6 @@
 
       const getQuery = (value) =>{
         queryFromSearchBox.value = value;
-        console.log(queryFromSearchBox.value);
       }
 
       return {
@@ -64,6 +56,8 @@
         fetchInfo,
         getQuery,
         SearchBox,
+        ResultBox,
+        Header,
       }
     }
   }
@@ -95,56 +89,5 @@
     min-height: 100vh;
     padding: 25px;
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75));
-  }
-
-  .w-header {
-    padding: 25px 0px 25px 0px;
-    text-align: center;
-    color: #FFF;
-    font-size: 32px;
-    font-weight: 500;
-    text-align: center;
-    text-shadow: 1px 3px rgba(0, 0, 0, 0.25);
-  }
-
-  .w-location .w-cityname {
-    color: #FFF;
-    font-size: 32px;
-    font-weight: 500;
-    text-align: center;
-    text-shadow: 1px 3px rgba(0, 0, 0, 0.25);
-  }
-
-  .w-location .w-datetime {
-    color: #FFF;
-    font-size: 20px;
-    font-weight: 300;
-    font-style: italic;
-    text-align: center;
-  }
-
-  .w-weather {
-    text-align: center;
-  }
-
-  .w-weather .w-degree {
-    display: inline-block;
-    padding: 10px 25px;
-    color: #FFF;
-    font-size: 102px;
-    font-weight: 900;
-    text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
-    background-color: rgba(255, 255, 255, 0.25);
-    border-radius: 16px;
-    margin: 30px 0px;
-    box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
-  }
-
-  .w-weather .w-status {
-    color: #FFF;
-    font-size: 48px;
-    font-weight: 700;
-    font-style: italic;
-    text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
   }
 </style>
