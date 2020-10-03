@@ -2,21 +2,16 @@
   <div class="app" :class="typeof data.main != 'undefined' && data.main.temp > 16 ? 'app-hot' : ''">
     <main>
       <div class="w-header">Wheatery</div>
-      <!--Todo: Separate in component -->
-      <div class="w-searchbox">
-        <input 
-        class="w-searchbar" 
-        placeholder="search..." 
-        v-model="query" 
+      <SearchBox 
+        @return-query="getQuery" 
         @keypress="fetchInfo"
-        />
-      </div>
+      />
       <!-- Todo: Separate in component -->
       <div class="w-search-result" v-if="typeof data.main != 'undefined'">
       <!-- Todo: Separate in component -->
         <div class="w-location">
           <div class="w-cityname">{{ data.name }}</div>
-          <div class="w-datetime">03 / 10 / 2020</div>
+          <div class="w-datetime">{{ date }}</div>
         </div>
         <!-- Todo: Separate in component -->
         <div class="w-weather">
@@ -33,31 +28,42 @@
     ref
   } from 'vue';
 
+  import SearchBox from './components/SearchBox.vue'
+
   export default {
 
     setup() {
       const apiKey= process.env.VUE_APP_OPENWEATHERMAPAPIKEY;
       const apiUrl= "https://api.openweathermap.org/data/2.5/";
 
-      const query = ref('');
+      const queryFromSearchBox = ref('');
       const data = ref({});
+      const date = ref('');
+      const dateNow = new Date();
 
       const fetchInfo = (event) => {
         if(event.key == "Enter"){
-          fetch(`${apiUrl}weather?q=${query.value}&units=metric&appid=${apiKey}`)
+          fetch(`${apiUrl}weather?q=${queryFromSearchBox.value}&units=metric&appid=${apiKey}`)
           .then(res => {return res.json()})
           .then(setData);
+          date.value = `${dateNow.getDate()} / ${dateNow.getMonth()} / ${dateNow.getFullYear()}`;
         }
       }
-
       const setData = (results) =>{
         data.value = results;
       }
 
+      const getQuery = (value) =>{
+        queryFromSearchBox.value = value;
+        console.log(queryFromSearchBox.value);
+      }
+
       return {
-        query,
-        fetchInfo,
         data,
+        date,
+        fetchInfo,
+        getQuery,
+        SearchBox,
       }
     }
   }
@@ -99,36 +105,6 @@
     font-weight: 500;
     text-align: center;
     text-shadow: 1px 3px rgba(0, 0, 0, 0.25);
-  }
-
-  .w-searchbox {
-    width: 100%;
-    margin-bottom: 30px;
-  }
-
-  .w-searchbox .w-searchbar {
-    display: block;
-    width: 100%;
-    padding: 15px;
-
-    color: #313131;
-    font-size: 20px;
-
-    appearance: none;
-    border: none;
-    outline: none;
-    background: none;
-
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 0px 16px 0px 16px;
-    transition: 0.4s;
-  }
-
-  .w-searchbox .w-searchbar:focus {
-    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
-    background-color: rgba(255, 255, 255, 0.75);
-    border-radius: 16px 0px 16px 0px;
   }
 
   .w-location .w-cityname {
