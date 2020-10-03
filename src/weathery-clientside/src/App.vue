@@ -2,6 +2,7 @@
   <div class="app" :class="typeof data.main != 'undefined' && data.main.temp > 16 ? 'app-hot' : ''">
     <main>
       <div class="w-header">Wheatery</div>
+      <!--Todo: Separate in component -->
       <div class="w-searchbox">
         <input 
         class="w-searchbar" 
@@ -10,11 +11,14 @@
         @keypress="fetchInfo"
         />
       </div>
+      <!-- Todo: Separate in component -->
       <div class="w-search-result" v-if="typeof data.main != 'undefined'">
+      <!-- Todo: Separate in component -->
         <div class="w-location">
           <div class="w-cityname">{{ data.name }}</div>
           <div class="w-datetime">03 / 10 / 2020</div>
         </div>
+        <!-- Todo: Separate in component -->
         <div class="w-weather">
           <div class="w-degree">{{ Math.round(data.main.temp) }}°</div>
           <div class="w-status">{{ data.weather[0].main }}</div>
