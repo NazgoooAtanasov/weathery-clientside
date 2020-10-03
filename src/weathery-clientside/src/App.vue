@@ -34,8 +34,9 @@
   } from 'vue';
 
   export default {
+
     setup() {
-      const apiKey= "fdd073bae48e03a92fe528f5058876c0";
+      const apiKey= process.env.VUE_APP_OPENWEATHERMAPAPIKEY;
       const apiUrl= "https://api.openweathermap.org/data/2.5/";
 
       const query = ref('');
@@ -56,7 +57,7 @@
       return {
         query,
         fetchInfo,
-        data
+        data,
       }
     }
   }
