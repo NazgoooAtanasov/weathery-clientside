@@ -1,6 +1,6 @@
 <template>
-  <ResultLocation :cityName="cityName" :givenDate="givenDate" />
-  <ResultWeather :givenDegree="givenDegree" :givenStatus="givenStatus" />
+  <ResultLocation :cityName="cityName" :date="date" />
+  <ResultWeather :degree="degree" :status="status" />
 </template>
 
 <script lang="ts">
@@ -9,17 +9,19 @@ import ResultLocation from "./ResultLocation.vue";
 import ResultWeather from "./ResultWeather.vue";
 
 export default defineComponent({
+  components:{
+    ResultLocation,
+    ResultWeather
+  },
   props: {
     cityName: String,
-    givenDate: String,
-    givenDegree: Number,
-    givenStatus: String,
+    date: String,
+    degree: Number,
+    status: String,
   },
   setup(props) {
     return {
       props,
-      ResultLocation,
-      ResultWeather,
     };
   },
 });

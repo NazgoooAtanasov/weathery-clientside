@@ -13,9 +13,9 @@
       <ResultBox
         v-if="typeof dataFromReq.main != 'undefined'"
         :cityName="dataFromReq.name"
-        :givenDate="date"
-        :givenDegree="Math.round(dataFromReq.main.temp)"
-        :givenStatus="dataFromReq.weather[0].main"
+        :date="date"
+        :degree="Math.round(dataFromReq.main.temp)"
+        :status="dataFromReq.weather[0].main"
       />
     </main>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="w-weather">
-    <div class="w-degree">{{ props.givenDegree }}°</div>
-    <div class="w-status">{{ props.givenStatus }}</div>
+    <div class="w-degree">{{ props.degree }}°</div>
+    <div class="w-status">{{ props.status }}</div>
   </div>
 </template>
 
@@ -10,8 +10,8 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
-    givenDegree: Number,
-    givenStatus: String,
+    degree: Number,
+    status: String,
   },
   setup(props) {
     return { props };
@@ -19,7 +19,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .w-weather {
   text-align: center;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="w-location">
     <div class="w-cityname">{{ props.cityName }}</div>
-    <div class="w-datetime">{{ props.givenDate }}</div>
+    <div class="w-datetime">{{ props.date }}</div>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: {
     cityName: String,
-    givenDate: String,
+    date: String,
   },
   setup(props) {
     return { props };
@@ -19,7 +19,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .w-location .w-cityname {
   color: #fff;
   font-size: 32px;
