@@ -2,64 +2,71 @@
   <div
     class="app"
     :class="
-      typeof data.main != 'undefined' && data.main.temp > 16 ? 'app-hot' : ''
+      typeof dataFromReq.main != 'undefined' && dataFromReq.main.temp > 16
+        ? 'app-hot'
+        : ''
     "
   >
     <main>
       <Header title="Weathery" />
       <SearchBox @return-query="getQuery" @keypress="fetchInfo" />
       <ResultBox
-        v-if="typeof data.main != 'undefined'"
-        :cityName="data.name"
+        v-if="typeof dataFromReq.main != 'undefined'"
+        :cityName="dataFromReq.name"
         :givenDate="date"
-        :givenDegree="Math.round(data.main.temp)"
-        :givenStatus="data.weather[0].main"
+        :givenDegree="Math.round(dataFromReq.main.temp)"
+        :givenStatus="dataFromReq.weather[0].main"
       />
     </main>
   </div>
 </template>
-<script>
-import { ref } from "vue";
+<script lang="ts">
+import { defineComponent, ref } from "vue";
 import Axios from "axios";
 
 import Header from "./components/Header/Header.vue";
 import SearchBox from "./components/SearchBox/SearchBox.vue";
 import ResultBox from "./components/ResultBox/ResultBox.vue";
 
-export default {
+export default defineComponent({
+  components: {
+    Header,
+    SearchBox,
+    ResultBox,
+  },
+
   setup() {
-    const apiKey = process.env.VUE_APP_OPENWEATHERMAPAPIKEY;
+    const apiKey = process.env.VUE_APP_OWMKEY;
     const apiUrl = "https://api.openweathermap.org/data/2.5/";
 
     const queryFromSearchBox = ref("");
-    const data = ref({});
+    const dataFromReq = ref({});
     const date = ref("");
     const dateNow = new Date();
 
-    const fetchInfo = (event) => {
+    const fetchInfo = async (event: any): Promise<void> => {
       if (event.key == "Enter") {
-        Axios.get(
+        const { data } = await Axios.get(
           `${apiUrl}weather?q=${queryFromSearchBox.value}&units=metric&appid=${apiKey}`
-        ).then((res) => (data.value = res.data.bpi));
+        );
+
         date.value = `${dateNow.getDate()} / ${dateNow.getMonth()} / ${dateNow.getFullYear()}`;
+        dataFromReq.value = data;
       }
     };
 
-    const getQuery = (value) => {
+    const getQuery = (value: string): void => {
       queryFromSearchBox.value = value;
     };
 
     return {
-      data,
+      dataFromReq,
       date,
       fetchInfo,
       getQuery,
-      SearchBox,
-      ResultBox,
-      Header,
     };
   },
-};
+});
 </script>
 
 <style>
