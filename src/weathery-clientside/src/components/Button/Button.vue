@@ -24,4 +24,7 @@ export default defineComponent({
   border-radius: 16px;
   box-shadow: 3px 6px rgba(0, 0, 0, 0.05);
 }
+.w-button:active{
+  background-color: rgba(255, 255, 255, 0.50);
+}
 </style>

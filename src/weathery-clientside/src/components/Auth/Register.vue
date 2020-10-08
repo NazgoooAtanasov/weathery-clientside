@@ -2,9 +2,7 @@
   <div class="app">
     <main class="w-registerCenter">
       <Header title="Register" />
-      <div v-if="errors">
-        <div v-bind:key="err" v-for="err in errors">{{err}}</div>
-      </div>
+      <Errors :errors="errors"/>
       <div class="w-inputSize">
         <InputField @return-value="fetchUsername" placeholder="username..." type="text"/>
         <InputField @return-value="fetchEmail" placeholder="email..." type="text"/>
@@ -20,12 +18,14 @@ import {defineComponent, ref} from 'vue';
 import InputField from "@/components/InputField/InputField.vue";
 import Button from "@/components/Button/Button.vue";
 import Header from "@/components/Header/Header.vue";
+import Errors from "@/components/Errors.vue";
 
 export default defineComponent({
   components:{
     InputField,
     Header,
-    Button
+    Button,
+    Errors
   },
   setup(){
     const username = ref('');

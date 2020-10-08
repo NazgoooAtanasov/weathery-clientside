@@ -5,7 +5,7 @@
         :type="props.type"
         :placeholder="props.placeholder"
         v-model="value"
-        @focusout="$emit('return-value', value)"
+        @change="$emit('return-value', value)"
     />
   </div>
 </template>
