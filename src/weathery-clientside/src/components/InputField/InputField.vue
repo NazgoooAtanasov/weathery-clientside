@@ -5,7 +5,7 @@
         :type="props.type"
         :placeholder="props.placeholder"
         v-model="value"
-        @keypress="(e) => e.key == 'Enter' ? $emit('return-value', value) : ''"
+        @focusout="$emit('return-value', value)"
     />
   </div>
 </template>
@@ -26,7 +26,12 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
+.w-inputfield {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
 .w-inputfield .w-inputbox{
   display: block;
   width: 100%;
@@ -44,8 +49,10 @@ export default defineComponent({
   transition: 0.4s;
   padding: 15px;
 }
-.w-inputfield {
-  width: 100%;
-  margin-bottom: 30px;
+.w-inputfield .w-inputbox:focus{
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.75);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 16px 0px 16px 0px;
+  transition: 0.2s;
 }
 </style>
