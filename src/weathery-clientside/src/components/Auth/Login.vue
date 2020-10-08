@@ -5,7 +5,6 @@
       <div v-if="errors">
         <div v-bind:key="err" v-for="err in errors">{{err}}</div>
       </div>
-      <div v-if="false">Test</div>
       <div class="w-inputSize">
         <InputField @return-value="fetchUsername" placeholder="username..." type="text"/>
         <InputField @return-value="fetchPassword" placeholder="password..." type="password"/>
