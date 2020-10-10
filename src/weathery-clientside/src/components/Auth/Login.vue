@@ -17,7 +17,7 @@ import { defineComponent, ref} from "vue";
 import Header from "../Header/Header.vue";
 import InputField from "@/components/InputField/InputField.vue";
 import Button from "@/components/Button/Button.vue";
-import Errors from "@/components/Errors.vue";
+import Errors from "@/components/Errors/Errors.vue";
 
 export default defineComponent({
   components: {
